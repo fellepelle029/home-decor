@@ -21,6 +21,8 @@ export class FavoriteProductComponent implements OnInit {
   count: number = 1;
   serverStaticPath = environment.serverStaticPath;
 
+  isInCart: boolean = false;
+
 
 
   constructor(private favoriteService: FavoriteService,
@@ -28,6 +30,10 @@ export class FavoriteProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.isInCart = false;
+    // this.parseProductInComponent(this.product.id);
+
+
     if (this.countInCart && this.countInCart > 1) {
       this.count = this.countInCart;
     }
@@ -84,6 +90,29 @@ export class FavoriteProductComponent implements OnInit {
           this.countInCart = this.count;
         });
     }
+  }
+
+  parseProductInComponent(productId: string) {
+    this.cartService.getCart()
+      .subscribe((productsInCart: CartType | DefaultResponseType) => {
+        if ((productsInCart as DefaultResponseType).error !== undefined) {
+          const error = (productsInCart as DefaultResponseType).message
+          throw new Error(error)
+        }
+
+        let productInCart: {quantity: number} | undefined;
+        (productsInCart as CartType).items.forEach(product => {
+          if (productId === product.product.id) {
+            productInCart = product;
+          }
+        });
+        console.log(productInCart)
+
+        if (productInCart) {
+          this.count = productInCart.quantity;
+          this.isInCart = true;
+        }
+      })
   }
 
 }

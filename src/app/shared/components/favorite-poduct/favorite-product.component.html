@@ -3,8 +3,8 @@
   <div class="favorite-product-name">{{product.name}}</div>
   <div class="favorite-product-price">{{product.price}} BYN</div>
   <div class="favorite-product-action">
-    <button class="button" *ngIf="!countInCart" (click)="addProductToCart()">В корзину</button>
-    <button *ngIf="countInCart" (click)="removeFromCart(product)" class="button button-transparent button-in-cart">
+    <button class="button" *ngIf="!isInCart" (click)="addProductToCart()">В корзину</button>
+    <button *ngIf="isInCart" (click)="removeFromCart(product)" class="button button-transparent button-in-cart">
       <span>В корзине</span>
       <span >Удалить</span>
     </button>
