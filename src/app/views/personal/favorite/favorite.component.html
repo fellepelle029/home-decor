@@ -10,7 +10,7 @@
 
 
     <div class="favorite-products" *ngIf="products && (products.length > 0)">
-      <app-favorite-product class="favorite-product" *ngFor="let product of products" [countInCart]="product.countInCart" [product]="product"></app-favorite-product>
+      <app-favorite-product class="favorite-product" *ngFor="let product of products" [countInCart]="product.countInCart" [product]="product" (removeFromFavorite)="removeProductFromFavorite($event)"></app-favorite-product>
     </div>
   </div>
 </div>

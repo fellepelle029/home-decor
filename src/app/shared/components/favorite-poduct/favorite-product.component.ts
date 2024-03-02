@@ -1,12 +1,10 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FavoriteType} from "../../../../types/favorite.type";
-import {ProductType} from "../../../../types/product.type";
 import {environment} from "../../../../environments/environment";
 import {FavoriteService} from "../../services/favorite.service";
 import {CartService} from "../../services/cart.service";
 import {DefaultResponseType} from "../../../../types/defaultResponse.type";
 import {CartType} from "../../../../types/cart.type";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-favorite-product',
@@ -17,12 +15,10 @@ export class FavoriteProductComponent implements OnInit {
 
   @Input() product!: FavoriteType;
   @Input() countInCart: number | undefined = 0;
+  @Output() removeFromFavorite: EventEmitter<string> = new EventEmitter<string>();
 
   count: number = 1;
   serverStaticPath = environment.serverStaticPath;
-
-  isInCart: boolean = false;
-
 
 
   constructor(private favoriteService: FavoriteService,
@@ -30,27 +26,33 @@ export class FavoriteProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.isInCart = false;
-    // this.parseProductInComponent(this.product.id);
 
+    this.cartService.getCart()
+      .subscribe((cartData: CartType | DefaultResponseType) => {
+        if ((cartData as DefaultResponseType).error !== undefined) {
+          const error = (cartData as DefaultResponseType).message
+          throw new Error(error)
+        }
+
+        const cartDataResponse = cartData as CartType
+
+        if (cartDataResponse) {
+          const productInCart = cartDataResponse.items.find(item => item.product.id === this.product.id)
+          if (productInCart) {
+            this.product.countInCart = productInCart.quantity;
+            this.count = this.product.countInCart;
+          }
+        }
+      });
 
     if (this.countInCart && this.countInCart > 1) {
       this.count = this.countInCart;
     }
   }
 
-
-  removeFromFavorites(id: string) {
-    this.favoriteService.removeFavorite(id)
-      .subscribe((data: DefaultResponseType) => {
-        if (data.error) {
-          throw new Error(data.message);
-        }
-        this.product.id = id;
-        window.location.reload()
-      })
+  removeFavorite(productId: string) {
+    this.removeFromFavorite.emit(productId);
   }
-
 
   addProductToCart() {
     this.cartService.updateCart(this.product.id, this.count)
@@ -75,9 +77,6 @@ export class FavoriteProductComponent implements OnInit {
       });
   }
 
-
-
-
   updateCount(value: number) {
     this.count = value;
     if (this.countInCart) {
@@ -91,28 +90,4 @@ export class FavoriteProductComponent implements OnInit {
         });
     }
   }
-
-  parseProductInComponent(productId: string) {
-    this.cartService.getCart()
-      .subscribe((productsInCart: CartType | DefaultResponseType) => {
-        if ((productsInCart as DefaultResponseType).error !== undefined) {
-          const error = (productsInCart as DefaultResponseType).message
-          throw new Error(error)
-        }
-
-        let productInCart: {quantity: number} | undefined;
-        (productsInCart as CartType).items.forEach(product => {
-          if (productId === product.product.id) {
-            productInCart = product;
-          }
-        });
-        console.log(productInCart)
-
-        if (productInCart) {
-          this.count = productInCart.quantity;
-          this.isInCart = true;
-        }
-      })
-  }
-
 }

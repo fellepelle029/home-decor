@@ -3,14 +3,14 @@
   <div class="favorite-product-name">{{product.name}}</div>
   <div class="favorite-product-price">{{product.price}} BYN</div>
   <div class="favorite-product-action">
-    <button class="button" *ngIf="!isInCart" (click)="addProductToCart()">В корзину</button>
-    <button *ngIf="isInCart" (click)="removeFromCart(product)" class="button button-transparent button-in-cart">
+    <button class="button" *ngIf="!countInCart" (click)="addProductToCart()">В корзину</button>
+    <button *ngIf="countInCart" (click)="removeFromCart(product)" class="button button-transparent button-in-cart">
       <span>В корзине</span>
       <span >Удалить</span>
     </button>
     <count-selector [count]="count" (onCountChange)="updateCount($event)"></count-selector>
   </div>
-  <div class="favorite-product-remove" (click)="removeFromFavorites(product.id)">
+  <div class="favorite-product-remove" (click)="removeFavorite(product.id)">
     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
       <line x1="0.935622" y1="0.650024" x2="12.9564" y2="12.6708" stroke="#A8ABA7" stroke-linecap="round"/>
       <line x1="12.9236" y1="0.629836" x2="0.902769" y2="12.6507" stroke="#A8ABA7" stroke-linecap="round"/>

@@ -1,12 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FavoriteService} from "../../../shared/services/favorite.service";
 import {FavoriteType} from "../../../../types/favorite.type";
 import {DefaultResponseType} from "../../../../types/defaultResponse.type";
 import {environment} from "../../../../environments/environment";
-import {error} from "@angular/compiler-cli/src/transformers/util";
-import {CartService} from "../../../shared/services/cart.service";
-import {CartType} from "../../../../types/cart.type";
-import {ProductType} from "../../../../types/product.type";
 
 @Component({
   selector: 'app-favorite',
@@ -15,15 +11,14 @@ import {ProductType} from "../../../../types/product.type";
 })
 export class FavoriteComponent implements OnInit {
 
-  @Input( )products: FavoriteType[] = [];
-  productToAdd!: ProductType;
+  products: FavoriteType[] = [];
+  product!: FavoriteType;
   count: number = 1;
   serverStaticPath = environment.serverStaticPath;
 
 
 
-  constructor(private favoriteService: FavoriteService,
-              private cartService: CartService) {
+  constructor(private favoriteService: FavoriteService) {
   }
 
   ngOnInit(): void {
@@ -40,60 +35,71 @@ export class FavoriteComponent implements OnInit {
       });
   }
 
-
-  // removeFromFavorites(id: string) {
-  //   this.favoriteService.removeFavorite(id)
-  //     .subscribe((data: DefaultResponseType) => {
-  //       if (data.error) {
-  //         throw new Error(data.message);
-  //       }
-  //       this.products = this.products.filter(item => item.id !== id);
-  //     })
-  // }
-
-
-  // addProductToCart(productId: string) {
-  //   this.cartService.updateCart(productId, this.count)
-  //     .subscribe((data: CartType | DefaultResponseType) => {
-  //       if ((data as DefaultResponseType).error !== undefined) {
-  //         const error = (data as DefaultResponseType).message
-  //         throw new Error(error)
-  //       }
-  //       if (data as CartType) {
-  //         this.productToAdd.countInCart = this.count;
-  //       }
-  //     });
-  // }
-
-  // removeFromCart(product: FavoriteType) {
-  //   this.cartService.updateCart(product.id, 0)
-  //     .subscribe((data: CartType| DefaultResponseType) => {
-  //       if ((data as DefaultResponseType).error !== undefined) {
-  //         const error = (data as DefaultResponseType).message
-  //         throw new Error(error)
-  //       }
-  //       this.productToAdd.countInCart = 0;
-  //       this.count = 1;
-  //     });
-  // }
-  //
-  //
-  //
-  //
-  // updateCount(value: number) {
-  //   this.count = value;
-  //   if (this.productToAdd.countInCart) {
-  //     this.cartService.updateCart(this.productToAdd.id, this.count)
-  //       .subscribe((data: CartType | DefaultResponseType) => {
-  //         if ((data as DefaultResponseType).error !== undefined) {
-  //           const error = (data as DefaultResponseType).message
-  //           throw new Error(error)
-  //         }
-  //         this.productToAdd.countInCart = this.count;
-  //
-  //       });
-  //   }
-  // }
-
+  removeProductFromFavorite(productId: string) {
+    this.favoriteService.removeFavorite(productId)
+      .subscribe((data: DefaultResponseType) => {
+        if (data.error) {
+          throw new Error(data.message);
+        }
+        this.products = this.products.filter(product => product.id !== productId);
+      });
+  }
 
 }
+
+
+
+// _________________________________________________________________________________________________________________
+
+// removeFromFavorites(id: string) {
+//   this.favoriteService.removeFavorite(id)
+//     .subscribe((data: DefaultResponseType) => {
+//       if (data.error) {
+//         throw new Error(data.message);
+//       }
+//       this.products = this.products.filter(item => item.id !== id);
+//     })
+// }
+
+// addProductToCart(productId: string) {
+//   this.cartService.updateCart(productId, this.count)
+//     .subscribe((data: CartType | DefaultResponseType) => {
+//       if ((data as DefaultResponseType).error !== undefined) {
+//         const error = (data as DefaultResponseType).message
+//         throw new Error(error)
+//       }
+//       if (data as CartType) {
+//         this.productToAdd.countInCart = this.count;
+//       }
+//     });
+// }
+
+// removeFromCart(product: FavoriteType) {
+//   this.cartService.updateCart(product.id, 0)
+//     .subscribe((data: CartType| DefaultResponseType) => {
+//       if ((data as DefaultResponseType).error !== undefined) {
+//         const error = (data as DefaultResponseType).message
+//         throw new Error(error)
+//       }
+//       this.productToAdd.countInCart = 0;
+//       this.count = 1;
+//     });
+// }
+//
+//
+//
+//
+// updateCount(value: number) {
+//   this.count = value;
+//   if (this.productToAdd.countInCart) {
+//     this.cartService.updateCart(this.productToAdd.id, this.count)
+//       .subscribe((data: CartType | DefaultResponseType) => {
+//         if ((data as DefaultResponseType).error !== undefined) {
+//           const error = (data as DefaultResponseType).message
+//           throw new Error(error)
+//         }
+//         this.productToAdd.countInCart = this.count;
+//
+//       });
+//   }
+// }
