@@ -49,6 +49,7 @@ export class CatalogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.router.navigate([], {queryParams: {page: 1}});
 
     this.cartService.getCart()
       .subscribe((data: CartType | DefaultResponseType) => {
