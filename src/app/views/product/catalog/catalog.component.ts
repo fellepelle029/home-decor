@@ -13,6 +13,7 @@ import {CartType} from "../../../../types/cart.type";
 import {FavoriteService} from "../../../shared/services/favorite.service";
 import {FavoriteType} from "../../../../types/favorite.type";
 import {DefaultResponseType} from "../../../../types/defaultResponse.type";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 import {AuthService} from "../../../core/auth/auth.service";
 
 @Component({
@@ -34,6 +35,7 @@ export class CatalogComponent implements OnInit {
     {name: 'По убыванию цены', value: 'price-desc'},
   ];
   pages: number[] = [];
+  activePage: number = 1;
   cart: CartType | null = null;
   favoriteProducts: FavoriteType[] | null = null;
 
@@ -47,7 +49,12 @@ export class CatalogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.pageQueryParamHandler();
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (!params['page']) {
+        this.router.navigate([], { queryParams: { page: 1 }, queryParamsHandling: 'merge' });
+      }
+    });
+
 
     this.cartService.getCart()
       .subscribe((data: CartType | DefaultResponseType) => {
@@ -70,7 +77,7 @@ export class CatalogComponent implements OnInit {
                   this.favoriteProducts = data as FavoriteType[];
                   this.processCatalog();
                 },
-                error: () => {
+                error: (error) => {
                   this.processCatalog();
                 }
               });
@@ -176,7 +183,7 @@ export class CatalogComponent implements OnInit {
 
     this.router.navigate(['/catalog'], {
       queryParams: this.activeParams,
-    }).then();
+    });
   }
 
   toggleSorting() {
@@ -188,14 +195,14 @@ export class CatalogComponent implements OnInit {
 
     this.router.navigate(['/catalog'], {
       queryParams: this.activeParams
-    }).then();
+    });
   }
 
   openPage(page: number) {
     this.activeParams.page = page;
     this.router.navigate(['/catalog'], {
       queryParams: this.activeParams
-    }).then();
+    });
   }
 
   openNextPage() {
@@ -203,7 +210,7 @@ export class CatalogComponent implements OnInit {
       this.activeParams.page++;
       this.router.navigate(['/catalog'], {
         queryParams: this.activeParams
-      }).then();
+      });
     }
   }
 
@@ -212,16 +219,8 @@ export class CatalogComponent implements OnInit {
       this.activeParams.page--;
       this.router.navigate(['/catalog'], {
         queryParams: this.activeParams
-      }).then();
+      });
     }
-  }
-
-  pageQueryParamHandler() {
-    this.activatedRoute.queryParams.subscribe(params => {
-      if (!params['page']) {
-        this.router.navigate([], {queryParams: {page: 1}, queryParamsHandling: 'merge'}).then();
-      }
-    });
   }
 
 }
