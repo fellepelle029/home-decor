@@ -53,8 +53,8 @@ export class CatalogComponent implements OnInit {
     this.cartService.getCart()
       .subscribe((data: CartType | DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          const error = (data as DefaultResponseType).message
-          throw new Error(error)
+          const error = (data as DefaultResponseType).message;
+          throw new Error(error);
         }
         this.cart = data as CartType;
 
@@ -64,7 +64,7 @@ export class CatalogComponent implements OnInit {
               {
                 next: (data: FavoriteType[] | DefaultResponseType) => {
                   if ((data as DefaultResponseType).error !== undefined) {
-                    const error = (data as DefaultResponseType).message
+                    const error = (data as DefaultResponseType).message;
                     this.processCatalog();
                     throw new Error(error);
                   }
@@ -94,10 +94,10 @@ export class CatalogComponent implements OnInit {
             this.activeParams = ActiveParamsUtil.processParams(params);
             this.appliedFilters = [];
             this.activeParams.types.forEach(url => {
-              console.log(url)
+              console.log(url);
 
               for (let i = 0; i < this.categoriesWithTypes.length; i++) {
-                const foundType = this.categoriesWithTypes[i].types.find(type => type.url === url)
+                const foundType = this.categoriesWithTypes[i].types.find(type => type.url === url);
                 if (foundType) {
                   this.appliedFilters.push({
                     name: foundType.name,
@@ -105,7 +105,7 @@ export class CatalogComponent implements OnInit {
                   });
                 }
               }
-            })
+            });
             if (this.activeParams.heightFrom) {
               this.appliedFilters.push({
                 name: `Высота: от ${this.activeParams.heightFrom} см`,
@@ -140,25 +140,25 @@ export class CatalogComponent implements OnInit {
                 if (this.cart && this.cart.items.length > 0) {
                   this.products = data.items.map(product => {
                     if (this.cart) {
-                      const productInCart = this.cart.items.find(item => item.product.id === product.id)
+                      const productInCart = this.cart.items.find(item => item.product.id === product.id);
                       if (productInCart) {
                         product.countInCart = productInCart.quantity;
                       }
                     }
                     return product;
-                  })
+                  });
                 } else {
                   this.products = data.items;
                 }
 
                 if (this.favoriteProducts) {
                   this.products = this.products.map(product => {
-                    const productInFavorite = this.favoriteProducts?.find(item => item.id === product.id)
+                    const productInFavorite = this.favoriteProducts?.find(item => item.id === product.id);
                     if (productInFavorite) {
                       product.isInFavorite = true;
                     }
                     return product;
-                  })
+                  });
                 }
 
               });
@@ -169,15 +169,15 @@ export class CatalogComponent implements OnInit {
   removeAppliedFilter(appliedFilter: AppliedFilterType): void {
     if (appliedFilter.urlParam === 'heightFrom' || appliedFilter.urlParam === 'heightTo' ||
       appliedFilter.urlParam === 'diameterFrom' || appliedFilter.urlParam === 'diameterTo') {
-      delete this.activeParams[appliedFilter.urlParam]
+      delete this.activeParams[appliedFilter.urlParam];
     } else {
-      this.activeParams.types = this.activeParams.types.filter(item => item !== appliedFilter.urlParam)
+      this.activeParams.types = this.activeParams.types.filter(item => item !== appliedFilter.urlParam);
     }
     this.activeParams.page = 1;
 
     this.router.navigate(['/catalog'], {
       queryParams: this.activeParams,
-    })
+    });
   }
 
   toggleSorting() {
@@ -189,7 +189,7 @@ export class CatalogComponent implements OnInit {
 
     this.router.navigate(['/catalog'], {
       queryParams: this.activeParams
-    })
+    });
   }
 
   openPage(page: number) {

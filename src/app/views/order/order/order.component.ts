@@ -61,17 +61,17 @@ export class OrderComponent implements OnInit {
     this.cartService.getCart()
       .subscribe((data: CartType | DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          const error = (data as DefaultResponseType).message
-          throw new Error(error)
+          const error = (data as DefaultResponseType).message;
+          throw new Error(error);
         }
         this.cart = data as CartType;
         if (!this.cart || (this.cart && this.cart.items.length === 0)) {
-          this._snackbar.open('Корзина пустая')
+          this._snackbar.open('Корзина пустая');
           this.router.navigate(['/']);
           return;
         }
-        this.calculateTotal()
-      })
+        this.calculateTotal();
+      });
 
     if (this.authService.isLoggedIn()) {
       this.userService.getUserInfo()
@@ -92,12 +92,12 @@ export class OrderComponent implements OnInit {
             entrance: userInfo.entrance ? userInfo.entrance : '',
             apartment: userInfo.apartment ? userInfo.apartment : '',
             comment: '',
-          }
+          };
           this.orderForm.setValue(paramsToUpdate);
           if (userInfo.deliveryType) {
             this.deliveryType = userInfo.deliveryType;
           }
-        })
+        });
     }
 
   }
@@ -110,7 +110,7 @@ export class OrderComponent implements OnInit {
       this.cart.items.forEach(item => {
         this.totalAmount += item.quantity * item.product.price;
         this.totalCount += item.quantity;
-      })
+      });
     }
   }
 
@@ -147,15 +147,15 @@ export class OrderComponent implements OnInit {
       }
 
       if (this.orderForm.value.comment) {
-        paramsObject.comment = this.orderForm.value.comment
+        paramsObject.comment = this.orderForm.value.comment;
       }
 
       this.orderService.createOrder(paramsObject)
         .subscribe({
           next: (data: OrderType | DefaultResponseType) => {
             if ((data as DefaultResponseType).error !== undefined) {
-              const error = (data as DefaultResponseType).message
-              throw new Error(error)
+              const error = (data as DefaultResponseType).message;
+              throw new Error(error);
             }
             this.dialogRef = this._dialog.open(this.popup);
             this.dialogRef.backdropClick()
@@ -166,14 +166,14 @@ export class OrderComponent implements OnInit {
           },
           error: (errorResponse: HttpErrorResponse) => {
             if (errorResponse.error && errorResponse.error.message) {
-              this._snackbar.open(errorResponse.error.message)
+              this._snackbar.open(errorResponse.error.message);
             } else {
-              this._snackbar.open('Ошибка заказа')
+              this._snackbar.open('Ошибка заказа');
             }
           }
         });
     } else {
-      this.orderForm.markAllAsTouched()
+      this.orderForm.markAllAsTouched();
       this._snackbar.open('Заполните необходимые поля');
     }
   }

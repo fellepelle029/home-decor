@@ -14,7 +14,7 @@ export class CategoryService {
   constructor(private http: HttpClient,) { }
 
   getCategories():Observable<CategoryType[]> {
-    return this.http.get<CategoryType[]>(environment.api + 'categories')
+    return this.http.get<CategoryType[]>(environment.api + 'categories');
   }
   getCategoriesWithTypes():Observable<CategoryWithTypeType[]> {
     return this.http.get<TypeType[]>(environment.api + 'types')
@@ -31,7 +31,7 @@ export class CategoryService {
                 id: item.id,
                 name: item.name,
                 url: item.url,
-              })
+              });
             } else {
               array.push({
                 id: item.category.id,
@@ -44,7 +44,7 @@ export class CategoryService {
                     url: item.url,
                   }
                 ]
-              })
+              });
             }
           });
 

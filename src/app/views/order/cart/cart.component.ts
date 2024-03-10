@@ -40,7 +40,7 @@ export class CartComponent implements OnInit {
       }
     },
     nav: false,
-  }
+  };
 
   extraProducts: ProductType[] = [];
   cart: CartType | null = null;
@@ -64,13 +64,13 @@ export class CartComponent implements OnInit {
     this.cartService.getCart()
       .subscribe((data: CartType | DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          const error = (data as DefaultResponseType).message
-          throw new Error(error)
+          const error = (data as DefaultResponseType).message;
+          throw new Error(error);
         }
         this.cart = data as CartType;
 
-        this.calculateTotal()
-      })
+        this.calculateTotal();
+      });
   }
 
   calculateTotal() {
@@ -81,7 +81,7 @@ export class CartComponent implements OnInit {
       this.cart.items.forEach(item => {
         this.totalAmount += item.quantity * item.product.price;
         this.totalCount += item.quantity;
-      })
+      });
     }
   }
 
@@ -90,12 +90,12 @@ export class CartComponent implements OnInit {
       this.cartService.updateCart(id, count)
         .subscribe((data: CartType | DefaultResponseType) => {
           if ((data as DefaultResponseType).error !== undefined) {
-            const error = (data as DefaultResponseType).message
-            throw new Error(error)
+            const error = (data as DefaultResponseType).message;
+            throw new Error(error);
           }
           this.cart = data as CartType;
-          this.calculateTotal()
-        })
+          this.calculateTotal();
+        });
     }
   }
 

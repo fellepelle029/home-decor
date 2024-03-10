@@ -29,7 +29,7 @@ export class ProductCardComponent implements OnInit {
               private favoriteService: FavoriteService,
               private router: Router,
               private _snackbar:MatSnackBar) {
-    this.isLogged = this.authService.isLoggedIn()
+    this.isLogged = this.authService.isLoggedIn();
   }
 
 
@@ -43,8 +43,8 @@ export class ProductCardComponent implements OnInit {
     this.cartService.updateCart(this.product.id, this.count)
       .subscribe((data: CartType| DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          const error = (data as DefaultResponseType).message
-          throw new Error(error)
+          const error = (data as DefaultResponseType).message;
+          throw new Error(error);
         }
         this.countInCart = this.count;
       });
@@ -56,8 +56,8 @@ export class ProductCardComponent implements OnInit {
       this.cartService.updateCart(this.product.id, this.count)
         .subscribe((data: CartType| DefaultResponseType) => {
           if ((data as DefaultResponseType).error !== undefined) {
-            const error = (data as DefaultResponseType).message
-            throw new Error(error)
+            const error = (data as DefaultResponseType).message;
+            throw new Error(error);
           }
           this.countInCart = this.count;
         });
@@ -68,8 +68,8 @@ export class ProductCardComponent implements OnInit {
     this.cartService.updateCart(this.product.id, 0)
       .subscribe((data: CartType| DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          const error = (data as DefaultResponseType).message
-          throw new Error(error)
+          const error = (data as DefaultResponseType).message;
+          throw new Error(error);
         }
         this.countInCart = 0;
         this.count = 1;
@@ -91,12 +91,12 @@ export class ProductCardComponent implements OnInit {
           }
 
           this.product.isInFavorite = false;
-        })
+        });
     } else {
       this.favoriteService.addFavorite(this.product.id)
         .subscribe((data: FavoriteType | DefaultResponseType) => {
           if ((data as DefaultResponseType).error !== undefined) {
-            throw new Error((data as DefaultResponseType).message)
+            throw new Error((data as DefaultResponseType).message);
           }
           this.product.isInFavorite = true;
         });

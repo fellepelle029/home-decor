@@ -63,25 +63,25 @@ export class HeaderComponent implements OnInit {
     this.cartService.getCartCount()
       .subscribe((data: { count: number } | DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          const error = (data as DefaultResponseType).message
-          throw new Error(error)
+          const error = (data as DefaultResponseType).message;
+          throw new Error(error);
         }
         this.count = (data as { count: number }).count;
-      })
+      });
 
     this.cartService.count$.subscribe(count => {
       this.count = count;
-    })
+    });
   }
 
   logout(): void {
     this.authService.logout()
       .subscribe({
         next: () => {
-          this.doLogout()
+          this.doLogout();
         },
         error: () => {
-          this.doLogout()
+          this.doLogout();
         },
       });
   }

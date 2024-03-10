@@ -21,15 +21,15 @@ export class CategoryFilterComponent implements OnInit {
 
   get title(): string {
     if (this.categoryWithTypes) {
-      return this.categoryWithTypes.name
+      return this.categoryWithTypes.name;
     } else if (this.type) {
       if (this.type === 'height') {
-        return 'Высота'
+        return 'Высота';
       } else if (this.type === 'diameter') {
-        return 'Диаметр'
+        return 'Диаметр';
       }
     }
-    return ''
+    return '';
   }
 
   constructor(private router: Router,
@@ -89,7 +89,7 @@ export class CategoryFilterComponent implements OnInit {
       if (this.activeParams[param] && !value) {
         delete this.activeParams[param];
       } else {
-        this.activeParams[param] = value
+        this.activeParams[param] = value;
       }
     }
     this.activeParams.page = 1;

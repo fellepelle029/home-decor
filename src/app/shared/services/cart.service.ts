@@ -11,18 +11,18 @@ import {DefaultResponseType} from "../../../types/defaultResponse.type";
 export class CartService {
 
   private count: number = 0;
-  count$: Subject<number> = new Subject<number>()
+  count$: Subject<number> = new Subject<number>();
 
   constructor(private http: HttpClient) {
   }
 
   setCount(count: number) {
     this.count = count;
-    this.count$.next(this.count)
+    this.count$.next(this.count);
   }
 
   getCart(): Observable<CartType | DefaultResponseType> {
-    return this.http.get<CartType | DefaultResponseType>(environment.api + 'cart', {withCredentials: true})
+    return this.http.get<CartType | DefaultResponseType>(environment.api + 'cart', {withCredentials: true});
   }
 
   updateCart(productId: string, quantity: number): Observable<CartType | DefaultResponseType> {

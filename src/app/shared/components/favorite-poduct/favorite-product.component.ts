@@ -30,14 +30,14 @@ export class FavoriteProductComponent implements OnInit {
     this.cartService.getCart()
       .subscribe((cartData: CartType | DefaultResponseType) => {
         if ((cartData as DefaultResponseType).error !== undefined) {
-          const error = (cartData as DefaultResponseType).message
-          throw new Error(error)
+          const error = (cartData as DefaultResponseType).message;
+          throw new Error(error);
         }
 
-        const cartDataResponse = cartData as CartType
+        const cartDataResponse = cartData as CartType;
 
         if (cartDataResponse) {
-          const productInCart = cartDataResponse.items.find(item => item.product.id === this.product.id)
+          const productInCart = cartDataResponse.items.find(item => item.product.id === this.product.id);
           if (productInCart) {
             this.product.countInCart = productInCart.quantity;
             this.count = this.product.countInCart;
@@ -58,8 +58,8 @@ export class FavoriteProductComponent implements OnInit {
     this.cartService.updateCart(this.product.id, this.count)
       .subscribe((data: CartType| DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          const error = (data as DefaultResponseType).message
-          throw new Error(error)
+          const error = (data as DefaultResponseType).message;
+          throw new Error(error);
         }
         this.countInCart = this.count;
       });
@@ -69,8 +69,8 @@ export class FavoriteProductComponent implements OnInit {
     this.cartService.updateCart(product.id, 0)
       .subscribe((data: CartType| DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          const error = (data as DefaultResponseType).message
-          throw new Error(error)
+          const error = (data as DefaultResponseType).message;
+          throw new Error(error);
         }
         this.countInCart = 0;
         this.count = 1;
@@ -83,8 +83,8 @@ export class FavoriteProductComponent implements OnInit {
       this.cartService.updateCart(this.product.id, this.count)
         .subscribe((data: CartType| DefaultResponseType) => {
           if ((data as DefaultResponseType).error !== undefined) {
-            const error = (data as DefaultResponseType).message
-            throw new Error(error)
+            const error = (data as DefaultResponseType).message;
+            throw new Error(error);
           }
           this.countInCart = this.count;
         });

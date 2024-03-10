@@ -13,8 +13,8 @@ export class PasswordRepeatDirective implements Validator{
 
     if (password?.value !== passwordRepeat?.value) {
       passwordRepeat?.setErrors({passwordRepeat: true});
-      return {passwordRepeat: true}
+      return {passwordRepeat: true};
     }
-    return null
+    return null;
   }
 }

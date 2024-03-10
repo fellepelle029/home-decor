@@ -47,7 +47,7 @@ export class DetailComponent implements OnInit {
       }
     },
     nav: false,
-  }
+  };
 
   constructor(private productService: ProductService,
               private _snackbar: MatSnackBar,
@@ -67,14 +67,14 @@ export class DetailComponent implements OnInit {
           this.cartService.getCart()
             .subscribe((cartData: CartType | DefaultResponseType) => {
               if ((cartData as DefaultResponseType).error !== undefined) {
-                const error = (cartData as DefaultResponseType).message
-                throw new Error(error)
+                const error = (cartData as DefaultResponseType).message;
+                throw new Error(error);
               }
 
-              const cartDataResponse = cartData as CartType
+              const cartDataResponse = cartData as CartType;
 
               if (cartDataResponse) {
-                const productInCart = cartDataResponse.items.find(item => item.product.id === this.product.id)
+                const productInCart = cartDataResponse.items.find(item => item.product.id === this.product.id);
                 if (productInCart) {
                   this.product.countInCart = productInCart.quantity;
                   this.count = this.product.countInCart;
@@ -86,7 +86,7 @@ export class DetailComponent implements OnInit {
             this.favoriteService.getFavorites()
               .subscribe((data: FavoriteType[] | DefaultResponseType) => {
                 if ((data as DefaultResponseType).error !== undefined) {
-                  const error = (data as DefaultResponseType).message
+                  const error = (data as DefaultResponseType).message;
                   throw new Error(error);
                 }
                 if (data as FavoriteType[]) {
@@ -114,8 +114,8 @@ export class DetailComponent implements OnInit {
     this.cartService.updateCart(this.product.id, this.count)
       .subscribe((data: CartType | DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          const error = (data as DefaultResponseType).message
-          throw new Error(error)
+          const error = (data as DefaultResponseType).message;
+          throw new Error(error);
         }
         this.product.countInCart = this.count;
       });
@@ -125,8 +125,8 @@ export class DetailComponent implements OnInit {
     this.cartService.updateCart(this.product.id, 0)
       .subscribe((data: CartType | DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          const error = (data as DefaultResponseType).message
-          throw new Error(error)
+          const error = (data as DefaultResponseType).message;
+          throw new Error(error);
         }
         this.product.countInCart = 0;
         this.count = 1;
@@ -140,8 +140,8 @@ export class DetailComponent implements OnInit {
       this.cartService.updateCart(this.product.id, this.count)
         .subscribe((data: CartType | DefaultResponseType) => {
           if ((data as DefaultResponseType).error !== undefined) {
-            const error = (data as DefaultResponseType).message
-            throw new Error(error)
+            const error = (data as DefaultResponseType).message;
+            throw new Error(error);
           }
           this.product.countInCart = this.count;
         });
@@ -162,12 +162,12 @@ export class DetailComponent implements OnInit {
           }
 
           this.product.isInFavorite = false;
-        })
+        });
     } else {
       this.favoriteService.addFavorite(this.product.id)
         .subscribe((data: FavoriteType | DefaultResponseType) => {
           if ((data as DefaultResponseType).error !== undefined) {
-            throw new Error((data as DefaultResponseType).message)
+            throw new Error((data as DefaultResponseType).message);
           }
           this.product.isInFavorite = true;
         });

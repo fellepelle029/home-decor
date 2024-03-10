@@ -35,7 +35,7 @@ export class MainComponent implements OnInit {
       }
     },
     nav: false,
-  }
+  };
 
   customOptionsReviews: OwlOptions = {
     loop: true,
@@ -58,7 +58,7 @@ export class MainComponent implements OnInit {
       },
     },
     nav: false,
-  }
+  };
 
   reviews = [
     {
@@ -97,7 +97,7 @@ export class MainComponent implements OnInit {
       text: 'В ассортименте я встретила все комнатные растения, которые меня интересовали. Цены - лучшие в городе. Доставка - очень быстрая и с заботой о растениях.',
 
     },
-  ]
+  ];
 
 
   constructor(private productService: ProductService) { }

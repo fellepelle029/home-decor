@@ -14,19 +14,19 @@ export class ProductService {
   }
 
   getBestProducts(): Observable<ProductType[]> {
-    return this.http.get<ProductType[]>(environment.api + 'products/best')
+    return this.http.get<ProductType[]>(environment.api + 'products/best');
   }
 
   getProducts(params: ActiveParamsType): Observable<{ totalCount: number, pages: number, items: ProductType[] }> {
     return this.http.get<{ totalCount: number, pages: number, items: ProductType[] }>(environment.api + 'products', {
       params: params,
-    })
+    });
   }
   searchProducts(query: string): Observable<ProductType[]> {
-    return this.http.get<ProductType[]>(environment.api + 'products/search?query=' + query)
+    return this.http.get<ProductType[]>(environment.api + 'products/search?query=' + query);
   }
   getProduct(url: string): Observable<ProductType> {
-    return this.http.get<ProductType>(environment.api + 'products/' + url)
+    return this.http.get<ProductType>(environment.api + 'products/' + url);
   }
 
 

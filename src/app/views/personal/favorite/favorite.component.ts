@@ -25,12 +25,12 @@ export class FavoriteComponent implements OnInit {
     this.favoriteService.getFavorites()
       .subscribe((data: FavoriteType[] | DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          const error = (data as DefaultResponseType).message
+          const error = (data as DefaultResponseType).message;
           throw new Error(error);
         }
         if (data as FavoriteType[]) {
           this.products = data as FavoriteType[];
-          console.log(data)
+          console.log(data);
         }
       });
   }

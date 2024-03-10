@@ -20,8 +20,8 @@ export class OrdersComponent implements OnInit {
     this.orderService.getOrders()
       .subscribe((data: OrderType[] | DefaultResponseType) => {
         if ((data as DefaultResponseType).error !== undefined) {
-          const error = (data as DefaultResponseType).message
-          throw new Error(error)
+          const error = (data as DefaultResponseType).message;
+          throw new Error(error);
         }
         this.orders = (data as OrderType[]).map(item => {
           const status = OrderStatusUtil.getStatusAndColor(item.status);

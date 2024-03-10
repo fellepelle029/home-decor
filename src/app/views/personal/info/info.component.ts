@@ -58,13 +58,13 @@ export class InfoComponent implements OnInit {
           house: userInfo.house ? userInfo.house : '',
           entrance: userInfo.entrance ? userInfo.entrance : '',
           apartment: userInfo.apartment ? userInfo.apartment : '',
-        }
+        };
 
         this.userInfoForm.setValue(paramsToUpdate);
         if (userInfo.deliveryType) {
           this.deliveryType = userInfo.deliveryType;
         }
-      })
+      });
 
   }
 
@@ -81,31 +81,31 @@ export class InfoComponent implements OnInit {
         email: this.userInfoForm.value.email ? this.userInfoForm.value.email : '',
         deliveryType: this.deliveryType,
         paymentType: this.userInfoForm.value.paymentType ? this.userInfoForm.value.paymentType : PaymentType.cashToCourier,
-      }
+      };
 
       if (this.userInfoForm.value.firstName)
-        paramObject.firstName = this.userInfoForm.value.firstName
+        paramObject.firstName = this.userInfoForm.value.firstName;
 
       if (this.userInfoForm.value.lastName)
-        paramObject.lastName = this.userInfoForm.value.lastName
+        paramObject.lastName = this.userInfoForm.value.lastName;
 
       if (this.userInfoForm.value.fatherName)
-        paramObject.fatherName = this.userInfoForm.value.fatherName
+        paramObject.fatherName = this.userInfoForm.value.fatherName;
 
       if (this.userInfoForm.value.phone)
-        paramObject.phone = this.userInfoForm.value.phone
+        paramObject.phone = this.userInfoForm.value.phone;
 
       if (this.userInfoForm.value.street)
-        paramObject.street = this.userInfoForm.value.street
+        paramObject.street = this.userInfoForm.value.street;
 
       if (this.userInfoForm.value.house)
-        paramObject.house = this.userInfoForm.value.house
+        paramObject.house = this.userInfoForm.value.house;
 
       if (this.userInfoForm.value.entrance)
-        paramObject.entrance = this.userInfoForm.value.entrance
+        paramObject.entrance = this.userInfoForm.value.entrance;
 
       if (this.userInfoForm.value.apartment)
-        paramObject.apartment = this.userInfoForm.value.apartment
+        paramObject.apartment = this.userInfoForm.value.apartment;
 
 
       this.userService.updateUserInfo(paramObject)
@@ -113,7 +113,7 @@ export class InfoComponent implements OnInit {
           next: (data: DefaultResponseType) => {
             if (data.error) {
               this._snackbar.open(data.message);
-              throw new Error(data.message)
+              throw new Error(data.message);
             }
 
             this._snackbar.open('Данные сохранены');
@@ -127,7 +127,7 @@ export class InfoComponent implements OnInit {
               this._snackbar.open('Ошибка сохранения');
             }
           },
-        })
+        });
     }
   }
 

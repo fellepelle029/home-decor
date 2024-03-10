@@ -9,7 +9,7 @@ export class CountSelectorComponent implements OnInit {
 
   @Input() count: number = 1;
 
-  @Output() onCountChange: EventEmitter<number> = new EventEmitter<number>()
+  @Output() onCountChange: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() { }
 
@@ -17,7 +17,7 @@ export class CountSelectorComponent implements OnInit {
   }
 
   countChange() {
-    this.onCountChange.emit(this.count)
+    this.onCountChange.emit(this.count);
   }
 
   decreaseCount() {

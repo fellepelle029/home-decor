@@ -16,7 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    this.loaderService.show()
+    this.loaderService.show();
 
     const tokens = this.authService.getTokens();
     if (tokens && tokens.accessToken) {
@@ -29,12 +29,12 @@ export class AuthInterceptor implements HttpInterceptor {
             if (error.status === 401 && !authReq.url.includes('/login') && !authReq.url.includes('/refresh')) {
               return this.handle401Error(authReq, next);
             }
-            return throwError(() => error)
+            return throwError(() => error);
           }),
           // finalize(() => this.loaderService.hide())
         );
     }
-    return next.handle(req)
+    return next.handle(req);
       // .pipe(finalize(() => this.loaderService.hide()));
   }
 
@@ -52,21 +52,21 @@ export class AuthInterceptor implements HttpInterceptor {
           }
 
           if (error) {
-            return throwError(() => new Error(error))
+            return throwError(() => new Error(error));
           }
           this.authService.setTokens(refreshResult.accessToken, refreshResult.refreshToken);
 
           const authReq = req.clone({
             headers: req.headers.set('x-access-token', refreshResult.accessToken)
-          })
+          });
           return next.handle(authReq);
         }),
         catchError(error => {
           this.authService.removeTokens();
-          this.router.navigate(['/'])
-          return throwError(() => error)
+          this.router.navigate(['/']);
+          return throwError(() => error);
         })
-      )
+      );
   }
 
 
